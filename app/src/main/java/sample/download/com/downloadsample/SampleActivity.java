@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import it.tiwiz.download.lib.DownloadActions;
+import it.tiwiz.download.lib.DownloadService;
 
 
 public class SampleActivity extends Activity implements View.OnClickListener{
@@ -62,9 +63,7 @@ public class SampleActivity extends Activity implements View.OnClickListener{
                 break;
         }
 
-        mDownloadIntent = DownloadActions.getDownloadIntent(this, path);
-        mDownloadIntent.putExtra(DownloadActions.START_DOWNLOAD_EXTRA_PATH, PATH_ON_SD_CARD);
-        startService(mDownloadIntent);
+        mDownloadIntent = DownloadService.start(this, path, PATH_ON_SD_CARD);
     }
 
     @Override

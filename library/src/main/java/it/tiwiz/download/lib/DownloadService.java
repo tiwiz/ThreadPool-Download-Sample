@@ -1,6 +1,7 @@
 package it.tiwiz.download.lib;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.IBinder;
@@ -16,6 +17,13 @@ public class DownloadService extends Service {
 
     private static int NOTIFICATION_ID = 1;
     public DownloadService() {
+    }
+
+    public static Intent start(Context context, String fileUrl, String filePathOnSdCard) {
+        Intent downloadIntent = DownloadActions.getDownloadIntent(context, fileUrl);
+        downloadIntent.putExtra(DownloadActions.START_DOWNLOAD_EXTRA_PATH, filePathOnSdCard);
+        context.startService(downloadIntent);
+        return downloadIntent;
     }
 
     @Override
