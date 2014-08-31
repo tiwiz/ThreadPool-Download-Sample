@@ -106,34 +106,37 @@ public class Manager {
     }
 
     public void handleStatus(Context context, Status status, int id, Object additionalData) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification;
 
-        switch(status) {
-            case STARTED:
-                notification = DownloadNotificationBuilder.downloadStarted(context, (String) additionalData, id);
-                break;
-            case UPDATED:
-                notification = DownloadNotificationBuilder.downloadUpdated(context, (Float) additionalData, id);
-                break;
-            case ERROR:
-                notification = DownloadNotificationBuilder.downloadError(context, (String) additionalData);
-                mTaskArray.remove(id);
-                break;
-            case COMPLETED:
-                notification = DownloadNotificationBuilder.downloadCompleted(context, (String) additionalData);
-                mTaskArray.remove(id);
-                break;
-            case CANCELED:
-                notification = DownloadNotificationBuilder.downloadCanceled(context);
-                break;
-            default:
-                notification = null;
-                break;
-        }
+        if (context != null) {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification notification;
 
-        if (notification != null) {
-            notificationManager.notify(id, notification);
+            switch (status) {
+                case STARTED:
+                    notification = DownloadNotificationBuilder.downloadStarted(context, (String) additionalData, id);
+                    break;
+                case UPDATED:
+                    notification = DownloadNotificationBuilder.downloadUpdated(context, (Float) additionalData, id);
+                    break;
+                case ERROR:
+                    notification = DownloadNotificationBuilder.downloadError(context, (String) additionalData);
+                    mTaskArray.remove(id);
+                    break;
+                case COMPLETED:
+                    notification = DownloadNotificationBuilder.downloadCompleted(context, (String) additionalData);
+                    mTaskArray.remove(id);
+                    break;
+                case CANCELED:
+                    notification = DownloadNotificationBuilder.downloadCanceled(context);
+                    break;
+                default:
+                    notification = null;
+                    break;
+            }
+
+            if (notification != null) {
+                notificationManager.notify(id, notification);
+            }
         }
     }
 
