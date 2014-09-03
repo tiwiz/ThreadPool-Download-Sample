@@ -10,6 +10,7 @@ import android.util.SparseArray;
 
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +51,7 @@ public class Manager {
         mTaskQueue = new LinkedBlockingQueue<DownloadTask>();
         mTaskArray = new SparseArray<DownloadTask>();
         mDownloadPool = new ThreadPoolExecutor(NUMBER_OF_CORES, MAXIMUM_CORES_POOL, KEEP_ALIVE_TIME,
-                KEEP_ALIVE_TIME_UNIT, mDownloadQueue);
+                KEEP_ALIVE_TIME_UNIT, mDownloadQueue, Executors.defaultThreadFactory());
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {

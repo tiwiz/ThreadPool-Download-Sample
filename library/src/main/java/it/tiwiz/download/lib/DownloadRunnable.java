@@ -38,7 +38,6 @@ public class DownloadRunnable implements Runnable {
     public void run() {
         Result result = Result.SUCCESS;
         mContainerTask.setCurrentThread(Thread.currentThread());
-        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         File dir = new File(mPathOnSdCard);
         if (dir.exists() == false) {
             dir.mkdirs();
@@ -58,7 +57,7 @@ public class DownloadRunnable implements Runnable {
             while (((bufferLength = inputStream.read(buffer)) > 0) && !Thread.interrupted()) {
                 downloadedSize += bufferLength;
                 outputStream.write(buffer, 0, bufferLength);
-                float current = (downloadedSize / fileSize) * 100;
+                float current = ((float) downloadedSize / (float) fileSize) * 100;
                 mContainerTask.publishUpdate(current);
             }
             outputStream.close();

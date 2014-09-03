@@ -26,6 +26,8 @@ public class DownloadService extends Service {
         return downloadIntent;
     }
 
+
+
     @Override
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
@@ -49,6 +51,6 @@ public class DownloadService extends Service {
         } else if (action.equals(DownloadActions.CANCEL_DOWNLOAD) && intent.hasExtra(DownloadActions.CANCEL_DOWNLOAD_ID)) {
             Manager.cancelDownload(intent.getIntExtra(DownloadActions.CANCEL_DOWNLOAD_ID, -1));
         }
-        return super.onStartCommand(intent, flags, startId);
+        return Service.START_STICKY;
     }
 }
